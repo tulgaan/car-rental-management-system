@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveRent | Car Rental Management System</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="authPage" class="auth-page">
+    <div class="auth-left">
+        <div class="brand">
+            <div class="brand-icon">
+                <i class="fa-solid fa-car-side"></i>
+            </div>
+            <span>DriveRent</span>
+        </div>
+
+        <div class="auth-intro">
+            <span class="intro-badge">CAR RENTAL MANAGEMENT</span>
+            <h1>Танд тохирох машинаа<br>хялбархан түрээслээрэй.</h1>
+            <p>
+                Машин хайх, захиалах, түрээсээ удирдах бүх үйлдлийг
+                нэг системээс хийх боломжтой.
+            </p>
+
+            <div class="feature-row">
+                <div>
+                    <i class="fa-solid fa-car"></i>
+                    <span>Олон төрлийн машин</span>
+                </div>
+                <div>
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Найдвартай үйлчилгээ</span>
+                </div>
+                <div>
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Хурдан захиалга</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-right">
+        <div class="auth-card">
+            <div class="mobile-logo">
+                <i class="fa-solid fa-car-side"></i>
+                DriveRent
+            </div>
+
+            <h2>Тавтай морил</h2>
+            <p class="auth-subtitle">Бүртгэлдээ нэвтэрч үйлчилгээгээ үргэлжлүүлнэ үү.</p>
+
+            <div class="auth-tabs">
+                <button id="loginTab" class="auth-tab active">Нэвтрэх</button>
+                <button id="registerTab" class="auth-tab">Бүртгүүлэх</button>
+            </div>
+
+            <div id="authMessage"></div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>И-мэйл</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            placeholder="example@email.com"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Нууц үг</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="••••••••"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <button type="submit" class="primary-btn">
+                    Нэвтрэх
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <form id="registerForm" class="d-none">
+                <div class="form-group">
+                    <label>Овог нэр</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-user"></i>
+                        <input
+                            type="text"
+                            id="registerName"
+                            placeholder="Сүх-Өлзийгийн Гантулга"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>И-мэйл</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input
+                            type="email"
+                            id="registerEmail"
+                            placeholder="example@email.com"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Нууц үг</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input
+                            type="password"
+                            id="registerPassword"
+                            placeholder="Хамгийн багадаа 6 тэмдэгт"
+                            minlength="6"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <button type="submit" class="primary-btn">
+                    Бүртгүүлэх
+                    <i class="fa-solid fa-user-plus"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="appPage" class="d-none">
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon small">
+                <i class="fa-solid fa-car-side"></i>
+            </div>
+            <span>DriveRent</span>
+        </div>
+
+        <nav>
+            <button class="nav-item active" data-page="dashboard">
+                <i class="fa-solid fa-house"></i>
+                <span>Хяналтын самбар</span>
+            </button>
+
+            <button class="nav-item" data-page="cars">
+                <i class="fa-solid fa-car"></i>
+                <span>Машинууд</span>
+            </button>
+
+            <button class="nav-item" data-page="rentals">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Миний түрээс</span>
+            </button>
+
+            <button class="nav-item admin-only" data-page="management">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <span>Удирдлага</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="user-mini">
+                <div class="avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div>
+                    <strong id="sidebarUserName">Хэрэглэгч</strong>
+                    <small id="sidebarUserEmail">user@email.com</small>
+                </div>
+            </div>
+
+            <button id="logoutBtn" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Гарах
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h4 id="pageTitle">Хяналтын самбар</h4>
+                <p id="currentDate"></p>
+            </div>
+
+            <div class="topbar-actions">
+                <button class="icon-btn">
+                    <i class="fa-regular fa-bell"></i>
+                </button>
+
+                <div class="top-user">
+                    <div class="avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <strong id="topUserName">Хэрэглэгч</strong>
+                        <small>DriveRent хэрэглэгч</small>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="dashboardPage" class="content-page">
+
+            <div class="welcome-banner">
+                <div>
+                    <span class="banner-label">DRIVERENT</span>
+                    <h2>Өнөөдөр хаашаа аялах вэ?</h2>
+                    <p>Өөрт тохирох машинаа сонгоод түрээсээ эхлүүлээрэй.</p>
+
+                    <button class="banner-btn" id="browseCarsBtn">
+                        Машин үзэх
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="banner-car">
+                    <i class="fa-solid fa-car-side"></i>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-car"></i>
+                    </div>
+                    <div>
+                        <span>Нийт машин</span>
+                        <h3 id="totalCars">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div>
+                        <span>Сул машин</span>
+                        <h3 id="availableCars">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <div>
+                        <span>Миний түрээс</span>
+                        <h3 id="activeRentals">0</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <div>
+                        <span>Нийт төлбөр</span>
+                        <h3 id="totalSpent">₮0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h5>Санал болгох машинууд</h5>
+                            <p>Танд тохирох боломжит машинууд</p>
+                        </div>
+
+                        <button class="text-btn" id="viewAllCarsBtn">
+                            Бүгдийг үзэх
+                        </button>
+                    </div>
+
+                    <div id="featuredCars" class="featured-cars"></div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h5>Түрээсийн тойм</h5>
+                            <p>Түрээсийн төлөвийн мэдээлэл</p>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="rentalChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel mt-4">
+                <div class="panel-header">
+                    <div>
+                        <h5>Сүүлийн түрээсүүд</h5>
+                        <p>Таны хамгийн сүүлд хийсэн захиалгууд</p>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Машин</th>
+                                <th>Эхлэх</th>
+                                <th>Дуусах</th>
+                                <th>Нийт үнэ</th>
+                                <th>Төлөв</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentRentalsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="carsPage" class="content-page d-none">
+            <div class="section-heading">
+                <div>
+                    <h2>Машинууд</h2>
+                    <p>Өөрт тохирох машинаа хайж сонгоно уу.</p>
+                </div>
+            </div>
+
+            <div class="filter-panel">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input
+                        id="carSearch"
+                        type="text"
+                        placeholder="Машины нэр, маркаар хайх..."
+                    >
+                </div>
+
+                <select id="categoryFilter">
+                    <option value="all">Бүх ангилал</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="SUV">SUV</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="Electric">Electric</option>
+                </select>
+
+                <select id="statusFilter">
+                    <option value="all">Бүх төлөв</option>
+                    <option value="available">Сул</option>
+                    <option value="rented">Түрээстэй</option>
+                </select>
+            </div>
+
+            <div id="carsGrid" class="cars-grid"></div>
+        </section>
+
+        <section id="rentalsPage" class="content-page d-none">
+            <div class="section-heading">
+                <div>
+                    <h2>Миний түрээс</h2>
+                    <p>Өөрийн түрээсийн түүх болон идэвхтэй захиалгуудаа удирдана.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Машин</th>
+                                <th>Эхлэх огноо</th>
+                                <th>Дуусах огноо</th>
+                                <th>Хоног</th>
+                                <th>Нийт үнэ</th>
+                                <th>Төлөв</th>
+                                <th>Үйлдэл</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="rentalsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="managementPage" class="content-page d-none">
+            <div class="section-heading">
+                <div>
+                    <h2>Машины удирдлага</h2>
+                    <p>Системийн машины мэдээллийг нэмэх, засах, устгах.</p>
+                </div>
+
+                <button class="primary-action-btn" id="addCarBtn">
+                    <i class="fa-solid fa-plus"></i>
+                    Машин нэмэх
+                </button>
+            </div>
+
+            <div class="panel">
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Машин</th>
+                                <th>Ангилал</th>
+                                <th>Улсын дугаар</th>
+                                <th>Өдрийн үнэ</th>
+                                <th>Төлөв</th>
+                                <th>Үйлдэл</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="managementTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<div class="modal fade" id="rentModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title">Машин түрээслэх</h5>
+                    <p id="rentCarName">Машин</p>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                ></button>
+            </div>
+
+            <form id="rentForm">
+                <div class="modal-body">
+                    <input type="hidden" id="rentCarId">
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label>Эхлэх огноо</label>
+                            <input
+                                type="date"
+                                id="startDate"
+                                class="form-control"
+                                required
+                            >
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Дуусах огноо</label>
+                            <input
+                                type="date"
+                                id="endDate"
+                                class="form-control"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="price-summary">
+                        <div>
+                            <span>Өдрийн үнэ</span>
+                            <strong id="dailyPrice">₮0</strong>
+                        </div>
+
+                        <div>
+                            <span>Нийт хоног</span>
+                            <strong id="totalDays">0</strong>
+                        </div>
+
+                        <div class="total">
+                            <span>Нийт төлбөр</span>
+                            <strong id="rentTotalPrice">₮0</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        data-bs-dismiss="modal"
+                    >
+                        Болих
+                    </button>
+
+                    <button type="submit" class="primary-action-btn">
+                        <i class="fa-solid fa-check"></i>
+                        Түрээслэх
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="carModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carModalTitle">Машин нэмэх</h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                ></button>
+            </div>
+
+            <form id="carForm">
+                <div class="modal-body">
+                    <input type="hidden" id="editCarId">
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label>Марка</label>
+                            <input
+                                type="text"
+                                id="carBrand"
+                                class="form-control"
+                                placeholder="Toyota"
+                                required
+                            >
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Загвар</label>
+                            <input
+                                type="text"
+                                id="carModel"
+                                class="form-control"
+                                placeholder="Land Cruiser 300"
+                                required
+                            >
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Ангилал</label>
+                            <select id="carCategory" class="form-select" required>
+                                <option value="Sedan">Sedan</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Luxury">Luxury</option>
+                                <option value="Electric">Electric</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Улсын дугаар</label>
+                            <input
+                                type="text"
+                                id="carPlate"
+                                class="form-control"
+                                placeholder="1234 УБА"
+                                required
+                            >
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Он</label>
+                            <input
+                                type="number"
+                                id="carYear"
+                                class="form-control"
+                                min="2000"
+                                max="2030"
+                                required
+                            >
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Өдрийн үнэ</label>
+                            <input
+                                type="number"
+                                id="carPrice"
+                                class="form-control"
+                                min="1"
+                                required
+                            >
+                        </div>
+
+                        <div class="col-12">
+                            <label>Зургийн URL</label>
+                            <input
+                                type="url"
+                                id="carImage"
+                                class="form-control"
+                                placeholder="https://..."
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        data-bs-dismiss="modal"
+                    >
+                        Болих
+                    </button>
+
+                    <button type="submit" class="primary-action-btn">
+                        Хадгалах
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
